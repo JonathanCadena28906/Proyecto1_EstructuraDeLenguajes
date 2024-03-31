@@ -1,43 +1,55 @@
 from MODEL.gramatica import Gramatica
 
+#La gramatica 1 funciona:
 
-if __name__ == "__main__":
+simbolos_terminales = ['a', 'b']
+simbolos_no_terminales = ['A', 'B']
+producciones = {
+    'A': ['aB', 'a'],
+    'B': ['bB', 'b']
+}
+simbolo_inicial = 'A'
 
+gramatica1 = Gramatica(simbolos_terminales, simbolos_no_terminales, producciones, simbolo_inicial)
+gramatica1.verificar_palabra('abbb')
 
-    # Esta no funcionaaaaa:
-    terminales = {'a', 'b'}
-    no_terminales = {'S', 'A'}
-    producciones = {'S': ['aSb',''], 'A': ['aA', '']}
-    simbolo_inicial = 'S'
+#La gramatica 2 No funciona PRESENTA PROBLEMAS CON LA RECURSION DE LA PRODUCCION 'T -> xT | xU', NO SE PUEDE VERIFICAR LA PALABRA 'xxxy':
 
-    gramatica1 = Gramatica(terminales, no_terminales, producciones, simbolo_inicial)
+simbolos_terminales = ['x', 'y']
+simbolos_no_terminales = ['S', 'T', 'U']
+producciones = {
+    'S': [['x'], ['T'], ['']],
+    'T': [['x', 'T'], ['x', 'U']],
+    'U': [['y']]
+}
+simbolo_inicial = 'S'
 
-    #Esta si funcionaaaaa:
-    terminales = {'a', 'b'}
-    no_terminales = {'S', 'T'}
-    producciones = {'S': ['b','bT',''], 'T': ['aT', '']}
-    simbolo_inicial = 'S'
+gramatica2 = Gramatica(simbolos_terminales, simbolos_no_terminales, producciones, simbolo_inicial)
+gramatica2.verificar_palabra('xxxy')
 
-    gramatica2 = Gramatica(terminales, no_terminales, producciones, simbolo_inicial)
+#La gramatica 3 funciona:
 
-# Verificar si una cadena pertenece al lenguaje definido por la gramática
-    #print(gramatica.producciones)
-    #gramatica.eliminar_recursion_izquierda()
-    #print(gramatica.producciones)
-    cadena = 'baaaaaaaaaaaaa'
-    print(f"Verificando si la cadena '{cadena}' pertenece al lenguaje {gramatica1.toPrint()}:")
-    if gramatica1.pertenece_a_gramatica(cadena):
-        print(f"La cadena '{cadena}' pertenece al lenguaje.")
-    else:
-        print(f"La cadena '{cadena}' no pertenece al lenguaje.")
+simbolos_terminales = ['1', '0']
+simbolos_no_terminales = ['S', 'X', 'Y']
+producciones = {
+    'S': [['X', 'Y']],
+    'X': [['1', 'X'], ['1']],
+    'Y': [['0']]
+}
+simbolo_inicial = 'S'
 
-'''G={Vt,Vn,S,P}
+gramatica3 = Gramatica(simbolos_terminales, simbolos_no_terminales, producciones, simbolo_inicial)
+gramatica3.verificar_palabra('11110')
 
-Vt={λ, b , a}
-Vn={ S, T } , donde es S es el símbolo inicial
+#La gramatica 4 :
 
+simbolos_terminales = ['a', 'b', '']
+simbolos_no_terminales = ['S', 'T']
+producciones = {
+    'S': [['b'], ['bT'], ['']],
+    'T': [['a', 'T'], ['']]
+}
+simbolo_inicial = 'S'
 
-El conjunto de P:
-
-S->  | b| bT | λ
-T->aT| λ'''
+gramatica4 = Gramatica(simbolos_terminales, simbolos_no_terminales, producciones, simbolo_inicial)
+gramatica4.verificar_palabra('baaaa')
